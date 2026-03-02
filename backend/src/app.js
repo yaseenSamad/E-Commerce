@@ -22,3 +22,5 @@ app.use('/api/auth',authRouter)
 app.use('/api/users/',userRoutes)
 app.use('/api/products',productRoutes)
 app.use('/api/orders',orderRoutes)
+
+app.use(globalErrorHandler);

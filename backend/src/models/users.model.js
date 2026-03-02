@@ -1,5 +1,20 @@
 import mongoose from "mongoose";
 
+export const addressSchema = new mongoose.Schema({
+    street: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true
+    },
+    zipCode: {
+      type: String,
+      required: true
+    }
+});
+
 export const userSchema  = new mongoose.Schema({
 name: {
     type: String,
@@ -24,11 +39,7 @@ name: {
 
 }, { timestamps: true })
 
-export const addressSchema = new Schema({
-  street: String,
-  city: String,
-  zipCode: String
-});
+
 
 // name (String)
 // email (String, unique, indexed)

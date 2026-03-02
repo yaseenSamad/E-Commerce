@@ -1,13 +1,13 @@
 import { app } from "../app";
-import { registerUser,loginUser } from "../controllers/auth.controller";
+import { addProductController,modifyProductController,deleteProductController,getProductDetailsBySlugController,getProductDetailsController } from "../controllers/product.controller";
 
 export const productRouter = app.Router()
 
-productRouter.get("/",registerUser);
-productRouter.get("/:slug",loginUser);
-productRouter.post("/",loginUser);
-productRouter.put("/:id",loginUser);
-productRouter.delete("/:id",loginUser);
+productRouter.get("/",getProductDetailsController);
+productRouter.get("/:slug",getProductDetailsBySlugController);
+productRouter.post("/",addProductController);
+productRouter.put("/:id",modifyProductController);
+productRouter.delete("/:id",deleteProductController);
 
 
 

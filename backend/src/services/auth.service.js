@@ -1,4 +1,4 @@
-import { userSchema,addressSchema, addressSchema } from "../models/users";
+import { userSchema, addressSchema } from "../models/users.model";
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
@@ -30,24 +30,27 @@ export const registerUserToModel = async(body) => {
 }
 
 export const loginUserModel = async() => {
-    const user = await userSchema.find({ email: body.email});
+    const user = await userSchema.findOne({ email: body.email});
     if(!user){
         throw new Error("Failed to login")
     }
 
-    bcrypt.compare(body.password, user.password, function(err, result) {
-        if(err || !result){
-            throw new Error("Failed to login")
-        }
+    const isMatch = await bcrypt.compare(body.password, user.password)
 
-        const token = jwt.sign({
-            exp: Math.floor(Date.now() / 1000) + (60 * 60),
-            data: user.email
-        }, process.env.JWTSECRETKEY);
+     if (!isMatch) {
+        throw new Error("Invalid credentials");
+    }
 
-        return token
-    });
+    const token = jwt.sign(
+        {
+        userId: user._id,   
+        email: user.email,
+        role: user.role
+        },
+        process.env.JWTSECRETKEY,
+        { expiresIn: "1h" }
+    );
 
-    return null
+  return token;
 
 }

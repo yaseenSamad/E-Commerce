@@ -9,6 +9,8 @@ name: {
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
+    index: true
     },
     description:{
     type: String,
